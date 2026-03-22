@@ -14,7 +14,7 @@ public abstract class User(string name, string surname)
     public abstract int GetMaxReservations();
     public override string ToString()
     {
-        return $"{GetType().Name}: {Name} {surname}"; // albo np. $"Camera: {Name}"
+        return $"{GetType().Name}: {Name} {surname}";
     }
     
 }

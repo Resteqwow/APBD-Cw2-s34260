@@ -14,6 +14,14 @@ var equipment3 = new Projector("flonderix", 10,200);
 
 IReservationService reservationService = new ReservationService();
 
+IEquipmentService equipmentService = new EquipmentService();
+
+equipmentService.addEquipment(equipment1);
+
+equipmentService.addEquipment(equipment2);
+
+equipmentService.addEquipment(equipment3);
+
 try
 {
     reservationService.CreateReservation(
@@ -25,29 +33,40 @@ try
     reservationService.CreateReservation(
         equipment1,
         user1,
-        new DateTime(2026, 1, 1, 10, 0, 0),
-        new DateTime(2026, 1, 4, 10, 30, 0));
+        new DateTime(2026, 1, 5, 10, 0, 0),
+        new DateTime(2026, 1, 10, 10, 30, 0));
     
     reservationService.CreateReservation(
         equipment1,
         user1,
-        new DateTime(2026, 1, 1, 10, 0, 0),
-        new DateTime(2026, 1, 4, 10, 30, 0));
+        new DateTime(2026, 1, 7, 10, 0, 0),
+        new DateTime(2026, 1, 1, 10, 30, 0));
 }
 catch (Exception e)
 {
     Console.WriteLine(e.Message);
 }
 
+foreach (var VARIABLE in reservationService.All())
+{ 
+    Console.WriteLine(VARIABLE);
+}
+
+
 try
 {
-    foreach (var VARIABLE in reservationService.All())
-    {
-        Console.WriteLine(VARIABLE);
-    }
-    
+    reservationService.CancelReservation(1);
+    reservationService.CancelReservation(4);
 }
 catch (Exception e)
 {
     Console.WriteLine(e.Message);
 }
+
+
+
+foreach (var VARIABLE in equipmentService.GetAllEquipment())
+{
+    Console.WriteLine(VARIABLE);
+}
+

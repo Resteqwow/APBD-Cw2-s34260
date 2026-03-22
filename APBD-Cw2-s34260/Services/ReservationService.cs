@@ -48,7 +48,7 @@ public class ReservationService : IReservationService
 
     public void CancelReservation(int  reservationId)
     {
-        if (_reservations.Any(reservation => reservation.Id == reservationId))
+        if (!_reservations.Any(reservation => reservation.Id == reservationId))
         {
             throw new ReservationNotFoundException(reservationId);
         }
@@ -69,12 +69,12 @@ public class ReservationService : IReservationService
 
     public List<Reservation> ExpiredReservations()
     {
-        return _reservations.Where(reservation => reservation.To > DateTime.Now && !reservation.IsCancelled).ToList();
+        return _reservations.Where(reservation => reservation.IsCancelled).ToList();
     }
 
     public void ReturnEquipment(int reservationId, DateTime when)
     {
-        if (_reservations.Any(reservation => reservation.Id == reservationId))
+        if (!_reservations.Any(reservation => reservation.Id == reservationId))
         {
             throw new ReservationNotFoundException(reservationId);
         }
