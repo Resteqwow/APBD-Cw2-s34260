@@ -7,17 +7,21 @@ public class Reservation(Equipment equipment, User user, DateTime from, DateTime
     public int Id { get; set; } =  _nextId++;
     public Equipment Equipment { get; set; } = equipment;
     public User User { get; set; } = user;
-    public DateTime From { get; set; } = from >= to ? throw new ArgumentException
-        ("Reservation return date cant be before initial reservation date") : from;
+    public DateTime From { get; set; } = from;
     public DateTime To { get; set; } = to;
-    
+    public DateTime? Returned { get; set; } = null;
     public bool IsCancelled { get; set; } = false;
-
-
+    public double Penalty { get; set; } = 0;
     public void CancelReservation()
     {
         IsCancelled = true;
     }
-    
-    
+    public bool Overlaps(DateTime from, DateTime to)
+    {
+        return !(From > to || from > To);
+    }
+    public override string ToString()
+    {
+        return $"Reservation #{Id}: {Equipment} reserved by {User} from {From} to {To}, Returned: {Returned}, Cancelled: {IsCancelled}, Penalty: {Penalty}";
+    }
 }

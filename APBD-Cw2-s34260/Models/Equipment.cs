@@ -11,5 +11,8 @@ public abstract class Equipment(string name)
     public string Name { get; set; } = name;
             
     public AvailabilityStatus Availability { get; set; } = AvailabilityStatus.Available;
-    
+    public override string ToString()
+    {
+        return $"{GetType().Name}: {Name} "; // albo np. $"Camera: {Name}"
+    }
 }
