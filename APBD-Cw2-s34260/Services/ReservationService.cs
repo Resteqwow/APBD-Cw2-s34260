@@ -74,11 +74,19 @@ public class ReservationService : IReservationService
 
     public void ReturnEquipment(int reservationId, DateTime when)
     {
+        
+        
         if (!_reservations.Any(reservation => reservation.Id == reservationId))
         {
             throw new ReservationNotFoundException(reservationId);
         }
+        
         var reservation = _reservations.Find(reservation => reservation.Id == reservationId);
+        if (reservation.IsCancelled)
+        {
+            throw new Exception("Reservation is already cancelled");
+        }
+        
         reservation.Returned = when;
         CalculatePenalty(reservation);
         reservation.CancelReservation();

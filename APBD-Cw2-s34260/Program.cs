@@ -24,18 +24,19 @@ equipmentService.addEquipment(equipment3);
 
 try
 {
+    //poprawne wypozyczenie sprzetu
     reservationService.CreateReservation(
         equipment1,
         user1,
         new DateTime(2026, 1, 1, 10, 0, 0),
         new DateTime(2026, 1, 4, 10, 30, 0));
-    
+    //poprawne wypozyczenie sprzetu
     reservationService.CreateReservation(
         equipment1,
         user1,
         new DateTime(2026, 1, 5, 10, 0, 0),
         new DateTime(2026, 1, 10, 10, 30, 0));
-    
+    //blad
     reservationService.CreateReservation(
         equipment1,
         user1,
@@ -47,16 +48,15 @@ catch (Exception e)
     Console.WriteLine(e.Message);
 }
 
-foreach (var VARIABLE in reservationService.All())
-{ 
-    Console.WriteLine(VARIABLE);
-}
-
 
 try
 {
-    reservationService.CancelReservation(1);
-    reservationService.CancelReservation(4);
+    //przekroczenie limitu
+    reservationService.CreateReservation(
+        equipment1,
+        user1,
+        new DateTime(2026, 3, 1, 10, 0, 0),
+        new DateTime(2026, 3, 4, 10, 30, 0));
 }
 catch (Exception e)
 {
@@ -64,9 +64,30 @@ catch (Exception e)
 }
 
 
-
-foreach (var VARIABLE in equipmentService.GetAllEquipment())
+try
 {
-    Console.WriteLine(VARIABLE);
+    // zwrot sprzetu po terminie
+    reservationService.ReturnEquipment(1,new DateTime(2026, 1, 20, 10, 30, 0));
+    
+    // zwrot sprzetu w terminie
+    reservationService.ReturnEquipment(2,new DateTime(2026, 1, 10, 10, 30, 0));
+  
+    
+    // proba zwrotu zakonczonej rezerwacji
+    reservationService.ReturnEquipment(1,new DateTime(2026, 1, 20, 10, 30, 0));
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
 }
 
+
+  
+foreach (var VARIABLE in reservationService.All())
+{ 
+    Console.WriteLine(VARIABLE);
+}
+foreach (var VARIABLE in equipmentService.GetAllEquipment())
+{ 
+    Console.WriteLine(VARIABLE);
+}

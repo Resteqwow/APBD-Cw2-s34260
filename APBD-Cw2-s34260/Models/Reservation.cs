@@ -2,7 +2,7 @@ namespace APBD_Cw2_s34260.Models;
 
 public class Reservation(Equipment equipment, User user, DateTime from, DateTime to)
 {
-    private static int _nextId = 0;
+    private static int _nextId = 1;
     
     public int Id { get; set; } =  _nextId++;
     public Equipment Equipment { get; set; } = equipment;
